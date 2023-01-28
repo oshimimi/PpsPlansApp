@@ -1,0 +1,53 @@
+﻿@using Microsoft.EntityFrameworkCore
+
+@inherits DbContextPage
+
+@inject DialogService DialogService
+@inject NotificationService NotificationService
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await LoadData();
+    }
+
+    //protected async Task OpenDetailsDialog<T, TPage>(T item, string? title = null) 
+    //    where TPage : ComponentBase
+    //    where T : Entity<int>
+    //{
+    //    await DialogService.OpenAsync<TPage>($"{title} #{item.Id}".Trim(),
+    //          new Dictionary<string, object>() { { "Id", item.Id } },
+    //          new DialogOptions() { ShowTitle = true, Style = "min-height:auto;min-width:auto;width:auto" });
+
+
+    //    DbContext.Entry(item).Reload();
+    //}
+
+    protected async Task OpenCreateDialog<T>(string? title = null) where T : ComponentBase
+    {
+        await DialogService.OpenAsync<T>(title ?? "Create new",
+              null,
+              new DialogOptions() { ShowTitle = true, Style = "min-height:auto;min-width:auto;width:auto" });
+
+        await LoadData();
+        StateHasChanged();
+    }
+
+    protected async Task Delete<T>(T item)
+    {
+        if (await DialogService.Confirm("Are you sure?", $"Delete #{item}?", 
+            new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" }) ?? false)
+        {
+            DbContext.Remove(item);
+            await DbContext.SaveChangesAsync();
+            await LoadData();
+            StateHasChanged();
+        }
+    }
+
+    protected virtual async Task LoadData()
+    {        
+    }
+}

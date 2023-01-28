@@ -1,20 +1,82 @@
 ﻿@inherits LayoutComponentBase
 
+
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject DialogService DialogService
+@inject NotificationService NotificationService
+
+
 <PageTitle>PpsPlansApp</PageTitle>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
-        <div class="top-row px-4 auth">
-            <LoginDisplay />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+<RadzenLayout class="rz-shadow-3">
+    <RadzenHeader>
+        <div class="row justify-content-start align-items-center">
+            <div class="col-5 d-flex align-items-center">
+                <RadzenSidebarToggle Click="@Toggle" />
+                <RadzenLabel Text="PpsPlans App" />
+            </div>
+            <div class="col-7 d-flex align-items-center justify-content-end">
+                <AuthorizeView>
+                    <RadzenProfileMenu class="text-end">
+                        <Template>
+                            <RadzenLabel Text="@UserEmail" class="mx-1" />
+                            <RadzenImage Path="@UserProfile" Style="height: 38px;"></RadzenImage>
+                        </Template>
+                        <ChildContent>
+                            <RadzenProfileMenuItem Text="Sign Out" Path="/admin/SignOut" Icon="logout"></RadzenProfileMenuItem>
+                        </ChildContent>
+                    </RadzenProfileMenu>
+                </AuthorizeView>
+            </div>
         </div>
-
-        <article class="content px-4">
+    </RadzenHeader>
+    <RadzenSidebar @bind-Expanded="@sidebar1Expanded">
+        <NavMenu />
+        <div class="p-2">
+            @*Sidebar*@
+        </div>
+    </RadzenSidebar>
+    <RadzenBody>
+        <div class="p-2">
             @Body
-        </article>
-    </main>
-</div>
+        </div>
+    </RadzenBody>
+@*    <RadzenFooter>
+        Ahau Software 2022 (c)
+    </RadzenFooter>*@
+</RadzenLayout>
+
+<RadzenDialog />
+<RadzenNotification />
+
+@code {
+    bool sidebar1Expanded = true;
+    public string? UserEmail { get; set; }
+    public string? UserProfile { get; set; }
+
+    private void Toggle()
+    {
+        sidebar1Expanded = !sidebar1Expanded;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await GetClaimsPrincipalData();
+    }
+      
+    private async Task GetClaimsPrincipalData()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated ?? false)
+        {
+            UserEmail = user.FindFirst(c => c.Type == ClaimTypes.Email)?.Value ?? user.Identity.Name;
+            UserProfile = user.FindFirst(c => c.Type == "picture")?.Value;
+        }
+    }
+}

@@ -1,0 +1,38 @@
+﻿<ErrorBoundary ChildContent="ChildContent!" @ref="errorBoundary">
+    <ErrorContent>
+        <RadzenAlert AllowClose="false" AlertStyle="AlertStyle.Danger" 
+            Variant="Variant.Flat" Shade="Shade.Lighter">
+            <div Style="margin-bottom: 1rem">
+                Error: @context?.Message
+            </div>
+            @if (context != null 
+                && !context.GetType().IsAssignableTo(typeof(ArgumentException)))
+            {
+
+                <RadzenText Style="white-space: pre;" TextStyle="TextStyle.Subtitle2">@context</RadzenText>
+            }
+            <RadzenButton Click="DismissClick" Text="Dismiss"></RadzenButton>
+        </RadzenAlert>
+    </ErrorContent>
+</ErrorBoundary>
+
+
+
+@code {
+    [Parameter]
+
+    public RenderFragment? ChildContent { get; set; }
+
+
+    private ErrorBoundary? errorBoundary;
+
+    protected override void OnParametersSet()
+    {
+        errorBoundary?.Recover();
+    }
+
+    void DismissClick()
+    {
+        errorBoundary?.Recover();
+    }
+}

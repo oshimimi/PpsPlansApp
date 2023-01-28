@@ -1,0 +1,19 @@
+﻿@using Microsoft.EntityFrameworkCore
+
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject DialogService DialogService
+@inject NotificationService NotificationService
+
+@code {
+    protected ApplicationDbContext DbContext;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        if (DbContext == null)
+        {
+            DbContext = await DbFactory.CreateDbContextAsync();
+        }
+    }
+}

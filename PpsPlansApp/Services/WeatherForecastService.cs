@@ -1,4 +1,4 @@
-namespace PpsPlansApp.Data
+namespace PpsPlansApp.Services
 {
     public class WeatherForecastService
     {
