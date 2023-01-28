@@ -1,7 +1,7 @@
 ﻿<FormField Component="@Component">
     <RadzenTextBox style="width: 100%;" Name="@Component"
                    Trim=true
-                   @bind-Value="Value" @bind-Value:after="ValueChanged" />
+                   Value="@Value" ValueChanged="@ValueChanged" />
 
     @if (Required ?? false)
     {
