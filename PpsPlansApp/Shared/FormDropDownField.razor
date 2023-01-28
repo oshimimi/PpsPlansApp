@@ -1,0 +1,43 @@
+﻿@typeparam TItem where TItem : Entity
+@inherits DbContextPage
+
+<FormField Component="@Component">
+    <RadzenDropDown Data=@list 
+                    @bind-Value=@Value
+                    @bind-Value:after=@ValueChanged
+                    Name="@Component"
+                    Placeholder="Choose..."
+                    TextProperty="Name" 
+                    ValueProperty="Id"
+                    Class="w-100" />
+
+    @if (Required ?? false)
+    {
+        <RadzenRequiredValidator Component="@Component" Text="* required"
+                             Style="position: absolute" />
+    }
+</FormField>
+
+@code {
+    [Parameter]
+    public int? Value { get; set; }
+    [Parameter]
+    public EventCallback<int> ValueChanged { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+
+    public string Component { get; set; }
+
+    [Parameter]
+    public bool? Required { get; set; }
+
+
+    public IList<TItem>? list { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        list = await DbContext.Set<TItem>().ToListAsync();
+
+    }
+}

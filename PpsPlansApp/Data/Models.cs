@@ -11,31 +11,33 @@ namespace PpsPlansApp.Data
 
     public class Car : Entity
     {
-        public required string CarNumber { get; set; }
+        public string CarNumber { get; set; }
         public FuelType? FuelType { get; set; }
     }
 
     public class Driver : Entity {
-        public required string FioName { get; set; }
+        public string FioName { get; set; }
     }
     public class Client : Entity {
-        public required string Name { get; set; }
+        public string Name { get; set; }
         public string? Country { get; set; }
     }
-    public class Terminal : Entity {
+    public class Terminal : Entity
+    {
+        public string Name { get; set; }
         /// <summary>
         /// Country City Company
         /// </summary>
-        public required string Company { get; set; }
-        public required string Address { get; set; }
+        public string? Company { get; set; }
+        public string? Address { get; set; }
         public FuelType? FuelType { get; set; }
         public string? GoogleMapsUrl { get; set; }
         public required ICollection<Delivery> Deliveries { get; set; }
     }
     public class Contract : Entity {
-        public required string ContractNo { get; set; }
-        public DateTime ContractDate { get; set; }
-        public DateTime DeliveryDate { get; set; }
+        public string? ContractNo { get; set; }
+        public DateTime? ContractDate { get; set; }
+        public DateTime? DeliveryDate { get; set; }
 
         public Terminal? From { get; set; }
         public Client? Client { get; set; }
@@ -43,7 +45,7 @@ namespace PpsPlansApp.Data
         [Precision(2)]
         public decimal TotalWeight { get; set; }
 
-        public required ICollection<Delivery> Deliveries { get; set; }
+        public ICollection<Delivery> Deliveries { get; set; }
     }
     public class Delivery : Entity {
         public DateTime DeliveredDate { get; set; }
@@ -60,7 +62,7 @@ namespace PpsPlansApp.Data
         public decimal SellPrice { get; set; }
         public bool Paid { get; set; }
 
-        public required DeliveryStatus Status { get; set; }
+        public DeliveryStatus Status { get; set; }
 
         public string? CMR_No { get; set; }
         public DateTime? CMR_Date { get; set; }

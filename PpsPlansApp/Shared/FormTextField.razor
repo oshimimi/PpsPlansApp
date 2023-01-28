@@ -1,0 +1,25 @@
+﻿<FormField Component="@Component">
+    <RadzenTextBox style="width: 100%;" Name="@Component"
+                   Trim=true
+                   @bind-Value="Value" @bind-Value:after="ValueChanged" />
+
+    @if (Required ?? false)
+    {
+        <RadzenRequiredValidator Component="@Component"
+                             Text="* required" />
+    }
+</FormField>
+
+@code {
+    [Parameter]
+    public string? Value { get; set; }
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+
+    public string Component { get; set; }
+
+    [Parameter]
+    public bool? Required { get; set; }
+}

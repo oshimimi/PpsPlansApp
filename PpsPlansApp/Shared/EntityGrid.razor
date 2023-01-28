@@ -1,0 +1,69 @@
+﻿@typeparam TItem where TItem : Entity
+@typeparam TDetailsPage where TDetailsPage : ComponentBase
+
+@inherits DbContextPage
+
+@inject DialogService DialogService
+@inject NotificationService NotificationService
+
+<RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" Class="mt-2 mb-4"
+              Text="Add New" Click=@(() => OpenCreateDialog<TDetailsPage>()) />
+
+<RadzenDataGrid AllowFiltering="true"
+                AllowColumnResize="true"
+                AllowAlternatingRows="false"
+                FilterMode="FilterMode.Simple"
+                AllowSorting="true"
+                PageSize="9"
+                AllowPaging="true"
+                PagerHorizontalAlign="HorizontalAlign.Left"
+                ShowPagingSummary="true"
+                Data="@GridPage.Data" TItem="TItem"
+                LogicalFilterOperator="LogicalFilterOperator.Or">
+    <Columns>
+        <RadzenDataGridColumn TItem="TItem" Property="Id" Filterable="false" Title="ID" Frozen="false"
+                              TextAlign="TextAlign.Left" Width="50px" />
+        @Columns
+        <RadzenDataGridColumn Width="70px" TItem="TItem" Property="Id" Title="" Filterable=false TextAlign="TextAlign.Right">
+            <Template Context="data">
+                <RadzenButton ButtonStyle="ButtonStyle.Info" Variant="Variant.Flat" Shade="Shade.Lighter" Icon="info" Class="m-1"
+                              Click=@(() => OpenDetailsDialog<TItem, TDetailsPage>(data)) />
+
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium"
+                              Class="my-1 ms-1"
+                              Click="@(args => GridPage.Delete(data))">
+                </RadzenButton>
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+    [Parameter]
+    public DbEntityGridPage<TItem> GridPage { get; set; }
+
+    [Parameter]
+    public RenderFragment Columns { get; set; }
+
+    public async Task OpenDetailsDialog<T, TPage>(T item, string? title = null)
+     where TPage : ComponentBase
+     where T : Entity
+    {
+        await DialogService.OpenAsync<TPage>($"{title} #{item.Id}".Trim(),
+              new Dictionary<string, object>() { { "Id", item.Id } },
+              new DialogOptions() { ShowTitle = true, Style = "min-height:auto;min-width:auto;width:auto" });
+
+
+        DbContext.Entry(item).Reload();
+    }
+
+    public async Task OpenCreateDialog<T>(string? title = null) where T : ComponentBase
+    {
+        await DialogService.OpenAsync<T>(title ?? "Create new",
+              null,
+              new DialogOptions() { ShowTitle = true, Style = "min-height:auto;min-width:auto;width:auto" });
+
+        await GridPage.LoadData();
+        StateHasChanged();
+    }
+}

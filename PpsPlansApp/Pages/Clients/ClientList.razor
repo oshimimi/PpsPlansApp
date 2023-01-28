@@ -1,63 +1,23 @@
 ﻿@page "/clients"
+@inherits DbEntityGridPage<Client>
 
-@inherits DbEntityGridPage
-@inject DialogService DialogService
+<PageHeader Title="Clients" />
 
-<PageTitle>Store Items</PageTitle>
-
-<RadzenText TextStyle="TextStyle.H4">
-    Store Items
-</RadzenText>
-<RadzenText TextStyle="TextStyle.Body1">
-    The list of the Store Items.
-</RadzenText>
-
-@*<RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" Class="mt-2 mb-4"
-              Text="Add New" Click=@(() => OpenCreateDialog<ClientPage>()) />
-
-<RadzenDataGrid 
-                AllowFiltering="true"
-                AllowColumnResize="true"
-                AllowAlternatingRows="false"
-                FilterMode="FilterMode.Simple"
-                AllowSorting="true"
-                PageSize="9"
-                AllowPaging="true"
-                PagerHorizontalAlign="HorizontalAlign.Left"
-                ShowPagingSummary="true"
-                Data="@data" TItem="StoreItem"
-                LogicalFilterOperator="LogicalFilterOperator.Or">
+<EntityGrid TItem="Client"
+            GridPage="@this"
+            TDetailsPage="ClientDetailsPage">
     <Columns>
-        <RadzenDataGridColumn TItem="StoreItem" Property="Id" Filterable="false" Title="ID" Frozen="true"
-        TextAlign="TextAlign.Left" Width="100px" />
-        <RadzenDataGridColumn TItem="StoreItem" Property="Name" Title="Name" Width="140px" />
-        <RadzenDataGridColumn TItem="StoreItem" Property="Product.Name" Title="Product" Width="140px" />
-        <RadzenDataGridColumn TItem="StoreItem" Property="Period.Name" Title="Period" Width="140px" />
-        <RadzenDataGridColumn TItem="StoreItem" Property="Quantity" Title="Quantity" Width="50px" />
-        <RadzenDataGridColumn Width="70px" TItem="StoreItem" Property="Id" Title="" Filterable=false TextAlign="TextAlign.Right">
-            <Template Context="data">
-                <RadzenButton ButtonStyle="ButtonStyle.Info" Variant="Variant.Flat" Shade="Shade.Lighter" Icon="info" Class="m-1"
-                              Click=@(() => OpenDetailsDialog<StoreItem, StoreItemPage>(data))
-                               />
+        <RadzenDataGridColumn TItem="Client" Property="Name" Title="Name" Width="140px" />
+        <RadzenDataGridColumn TItem="Client" Property="Country" Title="Country" Width="140px" />
 
-                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat" Shade="Shade.Lighter" Size="ButtonSize.Medium"
-                              Class="my-1 ms-1"
-                              Click="@(args => Delete(data))">
-                </RadzenButton>
-            </Template>
-        </RadzenDataGridColumn>
     </Columns>
-</RadzenDataGrid>*@
+</EntityGrid>
 
 @code {
-    //IQueryable<StoreItem>? data;
 
-    //protected override async Task LoadData()
-    //{
-    //    data = null;
-    //    data = DbContext.StoreItems
-    //        .OrderByDescending(x => x.Name)
-    //        .Include(x => x.Period)
-    //        .Include(x => x.Product);
-    //}
+    protected override IQueryable<Client> OnQuery(IQueryable<Client> q)
+    {
+        return q
+            .OrderByDescending(x => x.Name);
+    }
 }

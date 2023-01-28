@@ -1,0 +1,26 @@
+﻿@page "/clients/{Id:int}";
+
+
+<EntityForm TItem="Client" Id="@Id">
+    <Rows>
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenFieldset Text="Details">
+                    <FormTextField @bind-Value="context.Name"
+                                   ComponentName="Name"
+                                   Required=true />
+
+                    <FormTextField @bind-Value="context.Country"
+                                   ComponentName="Country" />
+
+                </RadzenFieldset>
+
+            </div>
+        </div>
+    </Rows>
+</EntityForm>
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+}

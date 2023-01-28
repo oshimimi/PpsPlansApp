@@ -1,0 +1,93 @@
+﻿@typeparam TItem where TItem : Entity, new()
+@*@typeparam TDetailsPage where TDetailsPage : ComponentBase*@
+@inherits DbContextPage
+@inject DialogService DialogService
+@inject NotificationService NotificationService
+
+@if (input == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <RadzenCard Class="mt-3" Style="min-width: 700px;">
+
+        <RadzenTemplateForm Data="@input" Submit="@((TItem args) => Submit(args))">
+            <div class="container-fluid">
+                @Rows(input)              
+                <div class="row justify-content-center">
+                    <div class="col-md-8 offset-md-2 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+                        <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+                        <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;"
+                                  Text="Cancel" Click="@Cancel" />
+                    </div>
+                    <div class="col-md-2  d-flex align-items-end  justify-content-end">
+                        <RadzenLink Path=@($"/clients/{Id}") Text="New Window" Target="_blank" />
+                    </div>
+                </div>
+            </div>
+        </RadzenTemplateForm>
+    </RadzenCard>
+}
+
+
+@code {
+
+
+    [Parameter]
+    public int? Id { get; set; }
+
+
+    [Parameter]
+    public RenderFragment<TItem> Rows { get; set; }
+
+    TItem input = new TItem();
+    //IEnumerable<Product>? products;
+    //IEnumerable<Period>? periods;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        if (Id != null)
+        {
+            input = await DbContext.Set<TItem>().Where(o => o.Id == Id).FirstAsync();
+        }
+
+        //products = await DbContext.Products.ToListAsync();
+        //periods = await DbContext.Periods.ToListAsync();
+    }
+
+    async Task Submit(TItem arg)
+    {
+        if (Id == null)
+        {
+            DbContext.Add(arg);
+        }
+        await DbContext!.SaveChangesAsync();
+        DialogService.Close(false);
+    }
+
+    void Cancel()
+    {
+        DialogService.Close(true);
+    }
+
+
+    protected async Task OpenDetailsDialog<T>(int id, string? title = null) where T : ComponentBase
+    {
+        await DialogService.OpenAsync<T>($"{title} #{id}".Trim(),
+              new Dictionary<string, object>() { { "Id", id } },
+              new DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto" });
+
+    }
+
+    protected async Task OpenCreateDialog<T>(string? title = null) where T : ComponentBase
+    {
+        await DialogService.OpenAsync<T>(title ?? "Create new",
+              null,
+              new DialogOptions() { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto" });
+
+    }
+}

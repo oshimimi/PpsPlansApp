@@ -1,0 +1,21 @@
+﻿
+<div class="row">
+    <div class="col-md-2">
+        <RadzenLabel Text="@(Label ?? Component)" Component="@Component" />
+    </div>
+    <div class="col-md-10">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+
+    public string? Component { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+}
