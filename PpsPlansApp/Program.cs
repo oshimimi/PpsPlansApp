@@ -41,7 +41,7 @@ namespace PpsPlansApp
             });
 
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-            services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<ContractService>();
 
 
             services.AddScoped<DialogService>();

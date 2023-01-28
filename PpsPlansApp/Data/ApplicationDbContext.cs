@@ -9,5 +9,12 @@ namespace PpsPlansApp.Data
             : base(options)
         {
         }
+
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<Driver> Drivers { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Terminal> Terminals { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<Delivery> Delivery { get; set; }
     }
 }
