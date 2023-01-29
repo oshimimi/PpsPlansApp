@@ -13,18 +13,21 @@
 
                     <FormDropDownField @bind-Value="context.Contract"
                                        TItem="Contract"
-                                       Title="№ ДС"
+                                       Label="№ ДС"
                                        Required=true
+                                       TextProperty="ContractNo"
                                        Component="Contract" />
 
                     <FormDropDownField @bind-Value="context.Driver"
                                        TItem="Driver"
-                                       Title="ФИО водителя"
+                                       Label="ФИО водителя"
+                                       TextProperty="FioName"
                                        Component="Driver" />
 
                     <FormDropDownField @bind-Value="context.Car"
                                        TItem="Car"
-                                       Title="№ авто"
+                                       Label="№ авто"
+                                       TextProperty="CarNumber"
                                        Component="Car" />
 
 

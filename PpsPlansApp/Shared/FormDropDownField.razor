@@ -11,7 +11,7 @@
                         ValueChanged=@ValueChanged
                         Name="@Component"
                         Placeholder="..."
-                        TextProperty="Name"
+                        TextProperty="@TextProperty"
                         Class="w-100" />
 
         @if (Required ?? false)
@@ -34,6 +34,10 @@
     [Parameter]
 
     public string? Label { get; set; }
+
+    [Parameter]
+
+    public string TextProperty { get; set; } = "Name";
 
     [Parameter]
     public bool? Required { get; set; }

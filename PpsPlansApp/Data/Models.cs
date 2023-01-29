@@ -15,21 +15,21 @@ namespace PpsPlansApp.Data
 
     public class Car : Entity
     {
-        public string CarNumber { get; set; }
+        public string CarNumber { get; set; } = "";
         public FuelType? FuelType { get; set; }
     }
 
     public class Driver : Entity {
-        public string FioName { get; set; }
+        public string FioName { get; set; } = "";
     }
     public class Client : Entity {
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
         public string? Country { get; set; }
     }
     public class Terminal : Entity
     {
         [DisplayName("Èìÿ")]
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
         /// <summary>
         /// Country City Company
         /// </summary>
