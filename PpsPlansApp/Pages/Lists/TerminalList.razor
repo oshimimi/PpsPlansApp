@@ -1,0 +1,28 @@
+﻿@page "/terminals/list"
+@inherits DbEntityGridPage<Terminal>
+
+<PageHeader Title="Терминалы" />
+
+<EntityGrid TItem="Terminal"
+            GridPage="@this"
+            TDetailsPage="TerminalForm">
+    <Columns>
+        <RadzenDataGridColumn TItem="Terminal" Property="Name" Title="Название" Width="140px" />
+        <RadzenDataGridColumn TItem="Terminal" Property="Company" Title="Компания"  />
+        <RadzenDataGridColumn TItem="Terminal" Property="Address" Title="Адрес" />
+        <RadzenDataGridColumn TItem="Terminal" Property="FuelType" Title="Топливо" Width="100px" />
+        <RadzenDataGridColumn TItem="Terminal" Property="GoogleMapsUrl" Title="Карта"  />
+
+        <RadzenDataGridColumn TItem="Terminal" Property="Note" Title="Заметки" Width="140px" />
+
+    </Columns>
+</EntityGrid>
+
+@code {
+
+    protected override IQueryable<Terminal> OnQuery(IQueryable<Terminal> q)
+    {
+        return q
+            .OrderByDescending(x => x.Name);
+    }
+}

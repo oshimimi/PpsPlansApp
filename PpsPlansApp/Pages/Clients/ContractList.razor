@@ -1,0 +1,28 @@
+﻿@page "/contracts/list"
+@inherits DbEntityGridPage<Contract>
+
+<PageHeader Title="Договора" />
+
+<EntityGrid TItem="Contract"
+            GridPage="@this"
+            TDetailsPage="ContractForm">
+    <Columns>
+        <RadzenDataGridColumn TItem="Contract" Property="ContractNo" Title="№ ДС" Width="140px" />
+        <RadzenDataGridColumn TItem="Contract" Property="ContractDate" Title="Дата ДС" Width="140px" FormatString="{0:d}" />
+        <RadzenDataGridColumn TItem="Contract" Property="DeliveryDate" Title="Срок отгрузки" Width="140px" FormatString="{0:d}" />
+        <RadzenDataGridColumn TItem="Contract" Property="From" Title="Пункт загрузки" Width="140px" />
+        <RadzenDataGridColumn TItem="Contract" Property="Client" Title="Клиент" Width="140px" />
+        <RadzenDataGridColumn TItem="Contract" Property="TotalWeight" Title="Вес (т.)" Width="100px" />
+       
+        <RadzenDataGridColumn TItem="Contract" Property="Note" Title="Заметки" Width="100px" />
+    </Columns>
+</EntityGrid>
+
+@code {
+
+    protected override IQueryable<Contract> OnQuery(IQueryable<Contract> q)
+    {
+        return q
+            .OrderByDescending(x => x.ContractNo);
+    }
+}

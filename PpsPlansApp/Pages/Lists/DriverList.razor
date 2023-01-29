@@ -1,0 +1,22 @@
+﻿@page "/drivers/list"
+@inherits DbEntityGridPage<Driver>
+
+<PageHeader Title="Водители" />
+
+<EntityGrid TItem="Driver"
+            GridPage="@this"
+            TDetailsPage="DriverForm">
+    <Columns>
+        <RadzenDataGridColumn TItem="Driver" Property="FioName" Title="ФИО" />
+        <RadzenDataGridColumn TItem="Driver" Property="Note" Title="Заметки" Width="140px" />
+    </Columns>
+</EntityGrid>
+
+@code {
+
+    protected override IQueryable<Driver> OnQuery(IQueryable<Driver> q)
+    {
+        return q
+            .OrderByDescending(x => x.FioName);
+    }
+}

@@ -1,0 +1,18 @@
+﻿<FormField Component="@Component" Label="Примечание">
+    <RadzenTextArea style="width: 100%;" Name="@Component"
+                   Rows=3                    
+                   Value="@Value" ValueChanged="@ValueChanged" />
+
+
+</FormField>
+
+@code {
+    [Parameter]
+    public string? Value { get; set; }
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+
+    public string Component { get; set; } = nameof(Entity.Note);
+}

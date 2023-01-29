@@ -1,0 +1,36 @@
+﻿@typeparam TEnum where TEnum : struct, Enum
+
+<FormField Component="@Component" Label="@Label">
+
+    <RadzenDropDown Data="@(Enum.GetValues(typeof(TEnum)).Cast<Enum>())" 
+                    Value="@Value" ValueChanged="@ValueChanged"
+                    AllowClear="true" AllowFiltering="false" 
+                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Class="w-100">
+    </RadzenDropDown>
+
+    @if (Required ?? false)
+    {
+        <RadzenRequiredValidator Component="@Component"
+                             Text="* необходим" />
+    }
+</FormField>
+
+@code {
+
+
+    [Parameter]
+    public TEnum? Value { get; set; } = default!;
+    [Parameter]
+    public EventCallback<TEnum?> ValueChanged { get; set; }
+
+    [Parameter]
+
+    public string? Component { get; set; }
+
+    [Parameter]
+
+    public string? Label { get; set; }
+
+    [Parameter]
+    public bool? Required { get; set; }
+}

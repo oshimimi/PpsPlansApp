@@ -1,0 +1,36 @@
+﻿@page "/delivery/list"
+@inherits DbEntityGridPage<Delivery>
+
+<PageHeader Title="Отгрузки" />
+
+<EntityGrid TItem="Delivery"
+            GridPage="@this"
+            TDetailsPage="DeliveryForm">
+    <Columns>
+        <RadzenDataGridColumn TItem="Delivery" Property="Contract.Client" Title="Клиент" Width="140px" />
+        <RadzenDataGridColumn TItem="Delivery" Property="Contract.ContractNo" Title="№ ДС" Width="140px" />
+        <RadzenDataGridColumn TItem="Delivery" Property="Contract.ContractDate" Title="Дата ДС" Width="140px" FormatString="{0:d}" />
+        <RadzenDataGridColumn TItem="Delivery" Property="Contract.From" Title="Пункт загрузки" Width="140px" />
+        <RadzenDataGridColumn TItem="Delivery" Property="Contract.DeliveryDate" Title="Срок отгрузки" Width="140px" />
+        <RadzenDataGridColumn TItem="Delivery" Property="Contract.TotalWeight" Title="Вес (т.)" Width="140px" />
+       
+        <RadzenDataGridColumn TItem="Delivery" Property="DeliveredDate" Title="Дата отгрузки" Width="140px" FormatString="{0:d}" />
+        <RadzenDataGridColumn TItem="Delivery" Property="Driver.FioName" Title="ФИО водителя" Width="140px" />
+        <RadzenDataGridColumn TItem="Delivery" Property="Car.CarNumber" Title="№ авто" Width="140px" />
+        <RadzenDataGridColumn TItem="Delivery" Property="Weight" Title="Отгружено" Width="80px" />
+        <RadzenDataGridColumn TItem="Delivery" Property="SellPrice" Title="Цена продажи" Width="80px" />
+        <RadzenDataGridColumn TItem="Delivery" Property="Paid" Title="Оплата +/-" Width="50px" />
+
+        <RadzenDataGridColumn TItem="Delivery" Property="Note" Title="Примечание" Width="100px" />
+
+    </Columns>
+</EntityGrid>
+
+@code {
+
+    protected override IQueryable<Delivery> OnQuery(IQueryable<Delivery> q)
+    {
+        return q
+            .OrderByDescending(x => x.Contract.ContractDate);
+    }
+}

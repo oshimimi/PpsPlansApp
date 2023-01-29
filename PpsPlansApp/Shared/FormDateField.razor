@@ -1,6 +1,5 @@
 ﻿<FormField Component="@Component" Label="@Label">
-    <RadzenTextBox style="width: 100%;" Name="@Component"
-                   Trim=true
+    <RadzenDatePicker style="width: 100%;" Name="@Component"
                    Value="@Value" ValueChanged="@ValueChanged" />
 
     @if (Required ?? false)
@@ -12,9 +11,9 @@
 
 @code {
     [Parameter]
-    public string? Value { get; set; }
+    public DateTime? Value { get; set; }
     [Parameter]
-    public EventCallback<string> ValueChanged { get; set; }
+    public EventCallback<DateTime?> ValueChanged { get; set; }
 
     [Parameter]
 

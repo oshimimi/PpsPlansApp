@@ -5,13 +5,15 @@
     <Rows>
         <div class="row">
             <div class="col-md-12">
-                <RadzenFieldset Text="Details">
+                <RadzenFieldset Text="Детали">
                     <FormTextField @bind-Value="context.Name"
                                    Component="Name"
                                    Required=true />
 
                     <FormTextField @bind-Value="context.Country"
                                    Component="Country" />
+
+                    <FormNoteField @bind-Value="context.Note"/>
 
                 </RadzenFieldset>
 

@@ -1,0 +1,24 @@
+﻿@page "/cars/list"
+@inherits DbEntityGridPage<Car>
+
+<PageHeader Title="Машины" />
+
+<EntityGrid TItem="Car"
+            GridPage="@this"
+            TDetailsPage="CarForm">
+    <Columns>
+        <RadzenDataGridColumn TItem="Car" Property="CarNumber" Title="Номер" />
+        <RadzenDataGridColumn TItem="Car" Property="FuelType" Title="Топливо" />
+       
+        <RadzenDataGridColumn TItem="Car" Property="Note" Title="Заметки" Width="140px" />
+    </Columns>
+</EntityGrid>
+
+@code {
+
+    protected override IQueryable<Car> OnQuery(IQueryable<Car> q)
+    {
+        return q
+            .OrderByDescending(x => x.CarNumber);
+    }
+}

@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace PpsPlansApp.Data
@@ -5,7 +6,10 @@ namespace PpsPlansApp.Data
     public class Entity 
     {
         [Key]
+        [DisplayName("#")]
         public int Id { get; set; }
+
+        [DisplayName("Примечание")]
         public string? Note { get; set; }
     }
 
@@ -24,6 +28,7 @@ namespace PpsPlansApp.Data
     }
     public class Terminal : Entity
     {
+        [DisplayName("Имя")]
         public string Name { get; set; }
         /// <summary>
         /// Country City Company
@@ -32,9 +37,10 @@ namespace PpsPlansApp.Data
         public string? Address { get; set; }
         public FuelType? FuelType { get; set; }
         public string? GoogleMapsUrl { get; set; }
-        public required ICollection<Delivery> Deliveries { get; set; }
+        public virtual ICollection<Delivery> Deliveries { get; set; }
     }
-    public class Contract : Entity {
+    public class Contract : Entity
+    {
         public string? ContractNo { get; set; }
         public DateTime? ContractDate { get; set; }
         public DateTime? DeliveryDate { get; set; }
@@ -48,11 +54,17 @@ namespace PpsPlansApp.Data
         public ICollection<Delivery> Deliveries { get; set; }
     }
     public class Delivery : Entity {
-        public DateTime DeliveredDate { get; set; }
+        public DateTime? DeliveredDate { get; set; }
 
+
+        [DisplayName("ДС")]
         public Contract? Contract { get; set; }
 
+        [DisplayName("Водитель")]
         public Driver? Driver { get; set; }
+
+
+        [DisplayName("Машина")]
         public Car? Car { get; set; }
 
         [Precision(2)]
@@ -62,7 +74,7 @@ namespace PpsPlansApp.Data
         public decimal SellPrice { get; set; }
         public bool Paid { get; set; }
 
-        public DeliveryStatus Status { get; set; }
+        public DeliveryStatus? Status { get; set; }
 
         public string? CMR_No { get; set; }
         public DateTime? CMR_Date { get; set; }

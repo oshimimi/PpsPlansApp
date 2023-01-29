@@ -1,8 +1,10 @@
 ﻿<RadzenPanelMenu>
-    <RadzenPanelMenuItem Text="Контракты" Icon="dashboard" Path="contracts" />
-    <RadzenPanelMenuItem Text="Отгрузки" Icon="dashboard" Path="delivery" />
-    <RadzenPanelMenuItem Text="Клиенты" Icon="person_add" Path="clients" />
-    <RadzenPanelMenuItem Text="Терминалы" Icon="search" Path="terminals" />
-    <RadzenPanelMenuItem Text="Машины" Icon="search" Path="cars" />
-    <RadzenPanelMenuItem Text="Водители" Icon="search" Path="drivers" />
+    <RadzenPanelMenuItem Text="Отгрузки" Icon="dashboard" Path="delivery/list" />
+    <RadzenPanelMenuItem Text="Контракты" Icon="dashboard" Path="contracts/list" />
+    <RadzenPanelMenuItem Text="Клиенты" Icon="person_add" Path="clients/list" />
+    <RadzenPanelMenuItem Text="Списки" Icon="search" Expanded=false>
+        <RadzenPanelMenuItem Text="Терминалы" Icon="search" Path="terminals/list" />
+        <RadzenPanelMenuItem Text="Машины" Icon="search" Path="cars/list" />
+        <RadzenPanelMenuItem Text="Водители" Icon="search" Path="drivers/list" />
+    </RadzenPanelMenuItem>
 </RadzenPanelMenu>

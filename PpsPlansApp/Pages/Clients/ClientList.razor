@@ -1,14 +1,15 @@
-﻿@page "/clients"
+﻿@page "/clients/list"
 @inherits DbEntityGridPage<Client>
 
-<PageHeader Title="Clients" />
+<PageHeader Title="Клиенты" />
 
 <EntityGrid TItem="Client"
             GridPage="@this"
             TDetailsPage="ClientForm">
     <Columns>
         <RadzenDataGridColumn TItem="Client" Property="Name" Title="Name" Width="140px" />
-        <RadzenDataGridColumn TItem="Client" Property="Country" Title="Country" Width="140px" />
+        <RadzenDataGridColumn TItem="Client" Property="Country" Title="Страна" Width="140px" />
+        <RadzenDataGridColumn TItem="Client" Property="Note" Title="Заметки" Width="200px" />
 
     </Columns>
 </EntityGrid>

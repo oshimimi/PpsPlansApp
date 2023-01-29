@@ -7,7 +7,7 @@
 @inject NotificationService NotificationService
 
 <RadzenButton ButtonStyle="ButtonStyle.Success" Icon="add_circle_outline" Class="mt-2 mb-4"
-              Text="Add New" Click=@(() => OpenCreateDialog<TDetailsPage>()) />
+              Text="Добавить..." Click=@(() => OpenCreateDialog<TDetailsPage>()) />
 
 <RadzenDataGrid AllowFiltering="true"
                 AllowColumnResize="true"
@@ -21,10 +21,7 @@
                 Data="@GridPage.Data" TItem="TItem"
                 LogicalFilterOperator="LogicalFilterOperator.Or">
     <Columns>
-        <RadzenDataGridColumn TItem="TItem" Property="Id" Filterable="false" Title="ID" Frozen="false"
-                              TextAlign="TextAlign.Left" Width="50px" />
-        @Columns
-        <RadzenDataGridColumn Width="70px" TItem="TItem" Property="Id" Title="" Filterable=false TextAlign="TextAlign.Right">
+        <RadzenDataGridColumn Width="120px" TItem="TItem" Property="Id" Title="" Filterable=false TextAlign="TextAlign.Left">
             <Template Context="data">
                 <RadzenButton ButtonStyle="ButtonStyle.Info" Variant="Variant.Flat" Shade="Shade.Lighter" Icon="info" Class="m-1"
                               Click=@(() => OpenDetailsDialog<TItem, TDetailsPage>(data)) />
@@ -35,6 +32,9 @@
                 </RadzenButton>
             </Template>
         </RadzenDataGridColumn>
+@*        <RadzenDataGridColumn TItem="TItem" Property="Id" Filterable="false" Title="ID" Frozen="false"
+                              TextAlign="TextAlign.Left" Width="50px" />*@
+        @Columns
     </Columns>
 </RadzenDataGrid>
 

@@ -4,16 +4,19 @@
     <Rows>
         <div class="row">
             <div class="col-md-12">
-                <RadzenFieldset Text="Details">
+                <RadzenFieldset Text="Детали">
 
                     <FormTextField @bind-Value="context.CarNumber"
+                                   Label="Номер"
                                    Component="CarNumber" />
 
-            @*        <FormTextField @bind-Value="context.FuelType"
-                    Component="FuelType" />
-*@
+                    <FormEnumField @bind-Value="context.FuelType"
+                                   Label="Топливо"
+                                   TEnum="FuelType"
+                                   Component="FuelType" />
 
                     <FormTextField @bind-Value="context.Note"
+                                   Label="Примечание"
                                    Component="Note" />
 
                 </RadzenFieldset>

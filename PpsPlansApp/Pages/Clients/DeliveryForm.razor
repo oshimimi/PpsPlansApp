@@ -1,0 +1,74 @@
+﻿@page "/delivery/{Id:int}";
+
+
+<EntityForm TItem="Delivery" Id="@Id">
+    <Rows>
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenFieldset Text="Детали">
+
+                    <FormDateField @bind-Value="context.DeliveredDate"
+                                   Label="Дата отгрузки"
+                                   Component="DeliveredDate" />
+
+                    <FormDropDownField @bind-Value="context.Contract"
+                                       TItem="Contract"
+                                       Title="№ ДС"
+                                       Required=true
+                                       Component="Contract" />
+
+                    <FormDropDownField @bind-Value="context.Driver"
+                                       TItem="Driver"
+                                       Title="ФИО водителя"
+                                       Component="Driver" />
+
+                    <FormDropDownField @bind-Value="context.Car"
+                                       TItem="Car"
+                                       Title="№ авто"
+                                       Component="Car" />
+
+
+                    <FormField Component="Weight" Label="Отгружено">
+                        <RadzenNumeric Name="Weight"
+                                       @bind-Value=context.Weight />
+
+                    </FormField>
+                    
+                    <FormField Component="SellPrice" Label="Цена продажи">
+                        <RadzenNumeric Name="SellPrice"
+                                       @bind-Value=context.SellPrice />
+
+                    </FormField>
+                    
+                    <FormField Component="Paid" Label="Оплата +/-">
+                        <RadzenSwitch  Name="Paid" 
+                                       @bind-Value=context.Paid />
+
+                    </FormField>
+                </RadzenFieldset>
+
+                <RadzenFieldset Text="CMR">
+                    <FormTextField @bind-Value="context.CMR_No"
+                                   Component="CMR_No" />
+
+                    <FormDateField @bind-Value="context.CMR_Date"
+                                   Component="CMR_Date" />
+                </RadzenFieldset>
+
+                <RadzenFieldset>
+                    <FormEnumField @bind-Value="context.Status"
+                                       TEnum="DeliveryStatus"
+                                       Component="Status" />
+
+                    <FormNoteField @bind-Value="context.Note"
+                                   Component="Note" />
+                </RadzenFieldset>
+            </div>
+        </div>
+    </Rows>
+</EntityForm>
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+}
