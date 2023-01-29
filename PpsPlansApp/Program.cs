@@ -22,11 +22,11 @@ namespace PpsPlansApp
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             services.AddDbContext<ApplicationDbContext>(options =>
                {
-                   //options.UseInMemoryDatabase("dev");
+                   options.UseInMemoryDatabase("dev");
                    options.EnableDetailedErrors(true);
                    options.EnableSensitiveDataLogging();
 
-                   options.UseSqlServer(connectionString);
+                   //options.UseSqlServer(connectionString);
                });
 
             services.AddDbContextFactory<ApplicationDbContext>(lifetime: ServiceLifetime.Scoped);
